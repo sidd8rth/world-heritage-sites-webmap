@@ -24,7 +24,7 @@ def marker_color(reg):
 
 
 # tiles changes the layer shown
-web_map = folium.Map(location=[23.0, 0.0], tiles="Stamen Terrain", zoom_start=4)
+web_map = folium.Map(location=[22.747085659852694, 75.82918338870914], tiles="Stamen Terrain", zoom_start=4)
 folium.TileLayer('openstreetmap').add_to(web_map)
 folium.TileLayer('cartodbpositron').add_to(web_map)
 folium.TileLayer('cartodbdark_matter').add_to(web_map)
@@ -39,11 +39,12 @@ for lt, ln, name, reg in zip(lat, lon, name,region):
 # To add polygon layer that is showing countries
 fgp = folium.FeatureGroup(name="Population")
 fgp.add_child(folium.GeoJson(data=open("world.json", 'r', encoding='utf-8-sig').read(),
-                            style_function=lambda x:{'fillColor': 'green' if x['properties']['POP2005'] < 100000000
+                            style_function=lambda x:{'fillColor': 'lightgreen' if x['properties']['POP2005'] < 50000000
+                            else 'green' if 50000000 <= x['properties']['POP2005'] < 100000000
                                                      else 'yellow' if 100000000 <= x['properties']['POP2005'] < 200000000
                                                      else 'orange' if 200000000 <= x['properties']['POP2005'] < 500000000
                                                      else 'red'}))
 web_map.add_child(fgs)
 web_map.add_child(fgp)
 web_map.add_child(folium.LayerControl())
-web_map.save("Map1.html")
+web_map.save("web_map.html")
